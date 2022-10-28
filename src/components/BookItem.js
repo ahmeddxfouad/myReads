@@ -1,19 +1,11 @@
 import React from 'react';
-import logo from '../icons/image-not-found.png';
-import {getAll} from "../BooksAPI";
 const BookItem = ({ book,setBooks,  editBookShelf}) => {
 
   let { id, title, authors, shelf, imageLinks } = book;
 
-  if(shelf=="")
+  if(shelf==="")
       shelf = "none";
 
-
-    const whenChange = async (book,e) => {
-        editBookShelf(book,e);
-        let newBooks = await getAll();
-        setBooks(newBooks);
-    }
 
   return (
       <div>
@@ -34,7 +26,7 @@ const BookItem = ({ book,setBooks,  editBookShelf}) => {
                     }}
                 ></div>
                 <div className="book-shelf-changer">
-                  <select id={book.id} defaultValue={(shelf!=="wantToRead" && shelf!=="read" && shelf!=="currentlyReading") ? "none" : shelf} onChange={(e) => whenChange(book, e)}>
+                  <select id={book.id} defaultValue={(shelf!=="wantToRead" && shelf!=="read" && shelf!=="currentlyReading") ? "none" : shelf} onChange={(e) => editBookShelf(book, e)}>
                     <option value="move" disabled>
                       Move to...
                     </option>

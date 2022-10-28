@@ -1,9 +1,7 @@
-import React, {useEffect, useState} from "react";
+import React, { useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {get, getAll, search} from "../BooksAPI";
 import BookItem from "./BookItem";
-import LoadingSpinner from "../constants/LoadingSpinner";
-import Image from "../icons/img.png";
 
 
 const Search = ({ book,setBooks, editBookShelf}) => {
@@ -23,15 +21,14 @@ const Search = ({ book,setBooks, editBookShelf}) => {
         console.log(res);
 
         if(res!==undefined && res.length>0){
-            setTimeout({},500);
+            //async setTimeout(console.log("Loading"),500);
             let newBooks= [];
             setSearchQuery(query);
 
 
             for (const element of res) {
-                newBooks.push(await get(element .id));
+                newBooks.push(await get(element.id));
             }
-
             setFilteredBooks(newBooks);
             setBooks(newBooks);
         }
@@ -46,8 +43,7 @@ const Search = ({ book,setBooks, editBookShelf}) => {
     return (
         <div className="search-books">
             <div className="search-books-bar">
-                <a
-                    className="close-search"
+                <a className="close-search"
                     onClick={navigateToHome}
                 >
                     Close
