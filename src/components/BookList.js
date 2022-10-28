@@ -7,6 +7,7 @@ import {useNavigate} from "react-router-dom";
 
 const BookList = ({
                     books,
+                    setBooks,
                     editBookShelf,
                   }) => {
     const navigate = useNavigate();
@@ -28,6 +29,7 @@ const BookList = ({
                             <BookItem
                                 key={book.id}
                                 book={book}
+                                setBooks={setBooks}
                                 editBookShelf={editBookShelf}
                             />
                         ))}

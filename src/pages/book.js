@@ -8,10 +8,8 @@ import Search from "../components/Search";
 const BookPage =  () => {
     const [books, setBooks] = React.useState([]);
 
-
-
     const editBookShelf = (book, newShelf) => {
-        console.log(newShelf.target.value);
+
         const newBooks = books.map((t) => {
             if (t.id === book.id) {
                 t.shelf = newShelf.target.value;
@@ -25,12 +23,10 @@ const BookPage =  () => {
     const addMockData = () => {
         setTimeout(async () => {
             let newBooks = await getAll();
-            //console.log(newBooks);
+            console.log(newBooks);
             setBooks(newBooks);
         }, 500);
     };
-
-
 
     useEffect(() => {
         addMockData();

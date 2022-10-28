@@ -1,7 +1,10 @@
 import React, {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
-import {getAll, search} from "../BooksAPI";
+import {get, getAll, search} from "../BooksAPI";
 import BookItem from "./BookItem";
+import LoadingSpinner from "../constants/LoadingSpinner";
+import Image from "../icons/img.png";
+
 
 const Search = ({ book,setBooks, editBookShelf}) => {
     const [searchQuery, setSearchQuery] = useState('');
@@ -15,18 +18,28 @@ const Search = ({ book,setBooks, editBookShelf}) => {
     }
 
     const queryUpdated  = async (query) => {
-        //console.log(query);
+
         const res = await search(query);
+        console.log(res);
 
         if(res!==undefined && res.length>0){
+            setTimeout({},500);
+            let newBooks= [];
             setSearchQuery(query);
-            setFilteredBooks(res);
+
+
+            for (const element of res) {
+                newBooks.push(await get(element .id));
+            }
+
+            setFilteredBooks(newBooks);
+            setBooks(newBooks);
         }
         else {
             setSearchQuery(query);
             setFilteredBooks([]);
+
         }
-        //console.log(res);
 
     }
 
@@ -48,8 +61,10 @@ const Search = ({ book,setBooks, editBookShelf}) => {
 
                 </div>
             </div>
+
             <div className="search-books-results">
                 <ol className="books-grid">
+
                     {filteredBooks
                         .filter((book) => book.imageLinks!==undefined && book.id !==undefined)
                         .map((book) => (
@@ -62,6 +77,7 @@ const Search = ({ book,setBooks, editBookShelf}) => {
                     ))}
                 </ol>
             </div>
+
 
         </div>
     );
